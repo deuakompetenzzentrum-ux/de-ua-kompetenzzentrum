@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#174ea6">
+<link rel="manifest" href="manifest.json">
+<title>Deutsch-Ukrainisches Kompetenzzentrum Thüringen</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f4f6fa;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:#172033}
+.app{max-width:560px;margin:auto;background:#fff;min-height:100vh}
+header{padding:22px;color:#fff;background:linear-gradient(135deg,#174ea6 0 60%,#ffd43b 60%)}
+main{padding:18px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card{background:#f2f5fa;border-radius:15px;padding:16px;border:0;text-align:left;min-height:105px}
+button,input,select,textarea{width:100%;padding:12px;margin:6px 0;border-radius:10px;border:1px solid #ccd3df;font:inherit}
+button{border:0;background:#174ea6;color:#fff;font-weight:700;cursor:pointer}
+.light{background:#eaf0fa;color:#174ea6}
+.danger{background:#fff0f0;color:#9b1c1c}
+.view{display:none} .view.active{display:block}
+.msg{padding:10px;border-radius:10px;margin:8px 0;background:#eef5ff}
+.item{background:#f5f7fb;border-radius:12px;padding:12px;margin:9px 0}
+small{color:#667085}
+.statusbadge{display:inline-block;padding:3px 8px;border-radius:999px;font-size:12px;font-weight:700;margin-left:5px}
+.status-neu{background:#eef5ff;color:#174ea6}
+.status-bestaetigt{background:#eaf7ee;color:#176b38}
+.status-erledigt{background:#f2f4f7;color:#475467}
+.doc-status-neu{background:#eef5ff;color:#174ea6}
+.doc-status-in_pruefung{background:#fff4df;color:#8a5200}
+.doc-status-erledigt{background:#eaf7ee;color:#176b38}
+.chatmsg{max-width:88%;padding:12px 14px;border-radius:16px;margin:9px 0;line-height:1.35}
+.chat-user{background:#eef5ff;margin-left:auto}
+.chat-admin{background:#fff7d6;margin-right:auto}
+.chatmeta{display:block;margin-top:6px;font-size:12px;color:#667085}
+.doc-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.account-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0 18px}
+.summary-card{background:#f5f7fb;border-radius:14px;padding:12px;text-align:center}
+.summary-card b{display:block;font-size:22px;margin-top:4px}
+.section-card{background:#fff;border:1px solid #e4e7ec;border-radius:16px;padding:14px;margin:14px 0;box-shadow:0 2px 8px rgba(16,24,40,.04)}
+.section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.section-title h3{margin:0}
+.pill{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef5ff;color:#174ea6;font-size:12px;font-weight:700}
+.progress{font-size:13px;color:#667085;margin:6px 0}
+a{color:#174ea6}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+<div style="font-size:38px">🤝</div>
+<h1>Deutsch-Ukrainisches<br>Kompetenzzentrum Thüringen</h1>
+<div>Beratung • Integration • Bildung • Unterstützung</div>
+</header>
+<main>
+<section id="home" class="view active">
+<h2>Wie können wir helfen?</h2>
+<div class="grid">
+<button class="card" onclick="show('appointment')">📅<br><b>Termin</b><br><small>Beratung anfragen</small></button>
+<button class="card" onclick="show('account')">👤<br><b>Mein Bereich</b><br><small>Login, Termine & Dokumente</small></button>
+<button class="card" onclick="show('contact')">📨<br><b>Kontakt</b><br><small>Nachricht senden</small></button>
+<button class="card" onclick="location.href='admin.html'">🔐<br><b>Admin</b><br><small>Mitarbeiter</small></button>
+</div>
+<p>📱 Deutschland: <a href="tel:+4917641691608">+49 176 41691608</a><br>
+🇺🇦 Ukraine: <a href="tel:+380686588503">+380 68 658 8503</a><br>
+📧 <a href="mailto:de.ua.kompetenzzentrum@gmail.com">de.ua.kompetenzzentrum@gmail.com</a></p>
+</section>
+
+<section id="appointment" class="view">
+<button class="light" onclick="show('home')">← Zurück</button>
+<h2>📅 Termin anfragen</h2><div id="amsg"></div>
+<form id="af">
+<input id="an" required maxlength="120" placeholder="Name">
+<input id="ap" required maxlength="50" placeholder="Telefon">
+<input id="ad" required type="date">
+<select id="as"><option>Beratung</option><option>Deutschkurse</option><option>Arbeit & Unternehmen</option><option>Arzt & Alltag</option><option>Ukraine-Hilfe</option></select>
+<textarea id="ao" maxlength="2000" placeholder="Kurze Beschreibung (optional)"></textarea>
+<button>Termin senden</button>
+</form>
+</section>
+
+<section id="contact" class="view">
+<button class="light" onclick="show('home')">← Zurück</button>
+<h2>📨 Kontakt</h2><div id="cmsg"></div>
+<form id="cf">
+<input id="cn" required maxlength="120" placeholder="Name">
+<input id="ce" required type="email" maxlength="254" placeholder="E-Mail">
+<textarea id="ct" required maxlength="3000" placeholder="Nachricht"></textarea>
+<button>Nachricht senden</button>
+</form>
+</section>
+
+<section id="account" class="view">
+<button class="light" onclick="show('home')">← Zurück</button>
+<h2>👤 Mein Bereich</h2>
+<div id="authmsg" class="msg">Noch nicht angemeldet.</div>
+<div id="authforms">
+<h3>Anmelden</h3>
+<input id="le" type="email" placeholder="E-Mail">
+<input id="lp" type="password" placeholder="Passwort">
+<button onclick="loginUser()">Anmelden</button>
+<h3>Neu registrieren</h3>
+<input id="rn" maxlength="120" placeholder="Vor- und Nachname">
+<input id="re" type="email" placeholder="E-Mail">
+<input id="rp" type="password" minlength="8" placeholder="Passwort (mind. 8 Zeichen)">
+<button class="light" onclick="registerUser()">Konto erstellen</button>
+</div>
+<div id="logged" style="display:none">
+<button class="light" onclick="logoutUser()">Abmelden</button>
+<div class="account-summary">
+<div class="summary-card">📅<b id="sumAppointments">0</b><small>Termine</small></div>
+<div class="summary-card">📄<b id="sumDocuments">0</b><small>Dokumente</small></div>
+<div class="summary-card">💬<b id="sumMessages">0</b><small>Nachrichten</small></div>
+</div>
+<div class="section-card">
+<div class="section-title"><h3>👤 Mein Profil</h3><span class="pill">Bearbeiten</span></div>
+<input id="profileName" maxlength="120" placeholder="Vor- und Nachname">
+<input id="profilePhone" maxlength="50" placeholder="Telefonnummer">
+<button onclick="saveProfile()">Profil speichern</button>
+<div id="profileMsg" class="progress"></div>
+</div>
+<div class="section-card"><div class="section-title"><h3>📅 Meine Termine</h3><span class="pill">Übersicht</span></div><div id="mine"></div></div>
+<div class="section-card"><div class="section-title"><h3>📄 Meine Dokumente</h3><span class="pill">Sicher hochladen</span></div>
+<p><small>PDF, JPG, PNG oder WebP · maximal 10 MB.</small></p>
+<input id="docfile" type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,application/pdf,image/jpeg,image/png,image/webp">
+<input id="docnote" maxlength="500" placeholder="Notiz zum Dokument (optional)">
+<button onclick="uploadDocument()">Dokument hochladen</button>
+<div id="docmsg" class="progress"></div><div id="docs"></div></div>
+<div class="section-card"><div class="section-title"><h3>💬 Nachrichten</h3><span class="pill">Direkter Kontakt</span></div>
+<div id="chatbox"></div><textarea id="chattext" maxlength="3000" placeholder="Nachricht an das Kompetenzzentrum"></textarea>
+<button onclick="sendChat()">Nachricht senden</button><div id="chatmsg" class="progress"></div></div>
+</div>
+</section>
+</main>
+</div>
+
+<script>
+const U="https://eqehktdeklulnyhbumrs.supabase.co", K="sb_publishable_zdn7_Zx-K21-QAHw9N3Y_A_3g3bk9lq";
+let token=sessionStorage.getItem('duk_token')||null, user=null;
+function $(id){return document.getElementById(id)}
+function show(id){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');if(id==='appointment'&&user)prefillAppointment()}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function escAttr(v){return esc(v).replace(/`/g,'&#96;')}
+async function req(path,opt={}){opt.headers={...(opt.headers||{}),apikey:K,'Content-Type':'application/json',...(token?{Authorization:'Bearer '+token}:{})};const r=await fetch(U+path,opt);const t=await r.text();if(!r.ok)throw Error(t);return t?JSON.parse(t):null}
+
+async function restoreSession(){if(!token)return;try{const r=await fetch(U+'/auth/v1/user',{headers:{apikey:K,Authorization:'Bearer '+token}});if(!r.ok)throw Error();user=await r.json();await setLoggedIn()}catch(e){token=null;user=null;sessionStorage.removeItem('duk_token')}}
+async function setLoggedIn(){let display=user?.user_metadata?.name||'';try{const ps=await req('/rest/v1/customer_profiles?select=display_name,email,phone&user_id=eq.'+encodeURIComponent(user.id)+'&limit=1');if(ps?.[0]){display=ps[0].display_name||display;$('profileName').value=display||'';$('profilePhone').value=ps[0].phone||''}}catch(e){}$('authmsg').textContent='✅ Willkommen'+(display?', '+display:'')+'!';$('authforms').style.display='none';$('logged').style.display='block';await Promise.all([loadMine(),loadDocuments(),loadChat(),prefillAppointment()])}
+async function loginUser(){try{const d=await req('/auth/v1/token?grant_type=password',{method:'POST',body:JSON.stringify({email:$('le').value,password:$('lp').value})});token=d.access_token;user=d.user;sessionStorage.setItem('duk_token',token);await setLoggedIn()}catch(e){$('authmsg').textContent='❌ Anmeldung fehlgeschlagen.'}}
+async function registerUser(){try{const name=$('rn').value.trim();if(!name){$('authmsg').textContent='Bitte Vor- und Nachname eingeben.';return}const d=await req('/auth/v1/signup',{method:'POST',body:JSON.stringify({email:$('re').value,password:$('rp').value,data:{name}})});$('authmsg').textContent=d.session?'✅ Konto erstellt und angemeldet.':'✅ Konto erstellt. Bitte E-Mail bestätigen und danach anmelden.';if(d.session){token=d.session.access_token;user=d.user;sessionStorage.setItem('duk_token',token);await setLoggedIn()}}catch(e){$('authmsg').textContent='❌ Registrierung fehlgeschlagen.'}}
+async function logoutUser(){try{if(token)await req('/auth/v1/logout',{method:'POST'})}catch(e){}token=null;user=null;sessionStorage.removeItem('duk_token');$('logged').style.display='none';$('authforms').style.display='block';$('authmsg').textContent='Abgemeldet.'}
+
+async function saveProfile(){if(!user||!token)return;const display_name=$('profileName').value.trim(),phone=$('profilePhone').value.trim()||null;if(!display_name){$('profileMsg').textContent='Bitte einen Namen eingeben.';return}try{await req('/rest/v1/customer_profiles?user_id=eq.'+encodeURIComponent(user.id),{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({display_name,phone,updated_at:new Date().toISOString()})});$('profileMsg').textContent='✅ Profil gespeichert.';$('authmsg').textContent='✅ Willkommen, '+display_name+'!'}catch(e){$('profileMsg').textContent='❌ Profil konnte nicht gespeichert werden.'}}
+async function prefillAppointment(){if(!user)return;try{const ps=await req('/rest/v1/customer_profiles?select=display_name,phone&user_id=eq.'+encodeURIComponent(user.id)+'&limit=1');if(ps?.[0]){if(ps[0].display_name&&!$('an').value)$('an').value=ps[0].display_name;if(ps[0].phone&&!$('ap').value)$('ap').value=ps[0].phone}}catch(e){}}
+
+async function loadMine(){if(!user)return;try{const rows=await req('/rest/v1/appointments?select=id,requested_date,service,status,note,confirmed_time,confirmation_message&user_id=eq.'+encodeURIComponent(user.id)+'&order=requested_date.desc');const labels={neu:'Neu',bestaetigt:'Bestätigt',erledigt:'Erledigt'};$('sumAppointments').textContent=rows.length;$('mine').innerHTML=rows.length?rows.map(x=>`<div class="item"><b>${esc(x.requested_date)} · ${esc(x.service)}</b><br>Status: <span class="statusbadge status-${esc(x.status)}">${esc(labels[x.status]||x.status)}</span>${x.confirmed_time?`<p><b>🕒 Bestätigte Uhrzeit:</b> ${esc(x.confirmed_time.slice(0,5))} Uhr</p>`:''}${x.confirmation_message?`<p><b>💬 Nachricht vom Kompetenzzentrum:</b><br>${esc(x.confirmation_message)}</p>`:''}${x.note?'<p><small>Ihre Notiz: '+esc(x.note)+'</small></p>':''}</div>`).join(''):'<p>Noch keine Termine in Ihrem Konto.</p>'}catch(e){$('mine').innerHTML='<p><small>Termine konnten gerade nicht geladen werden.</small></p>'}}
+
+function safeFileName(name){return name.normalize('NFKD').replace(/[^a-zA-Z0-9._-]/g,'_').slice(-120)}
+function formatBytes(n){if(n==null)return '';if(n<1024)return n+' B';if(n<1048576)return(n/1024).toFixed(1)+' KB';return(n/1048576).toFixed(1)+' MB'}
+async function uploadDocument(){if(!user||!token){$('docmsg').textContent='Bitte zuerst anmelden.';return}const f=$('docfile').files[0];if(!f){$('docmsg').textContent='Bitte eine Datei auswählen.';return}const allowed=['application/pdf','image/jpeg','image/png','image/webp'];if(!allowed.includes(f.type)){$('docmsg').textContent='❌ Dateityp nicht erlaubt.';return}if(f.size>10*1024*1024){$('docmsg').textContent='❌ Datei ist größer als 10 MB.';return}$('docmsg').textContent='⏳ Datei wird hochgeladen…';const path=user.id+'/'+crypto.randomUUID()+'-'+safeFileName(f.name);try{const up=await fetch(U+'/storage/v1/object/user-documents/'+encodeURI(path),{method:'POST',headers:{apikey:K,Authorization:'Bearer '+token,'Content-Type':f.type,'x-upsert':'false'},body:f});if(!up.ok)throw Error(await up.text());await req('/rest/v1/user_documents',{method:'POST',headers:{Prefer:'return=minimal'},body:JSON.stringify({user_id:user.id,file_name:f.name,storage_path:path,mime_type:f.type,file_size:f.size,note:$('docnote').value.trim()||null})});$('docfile').value='';$('docnote').value='';$('docmsg').textContent='✅ Dokument sicher hochgeladen.';await loadDocuments()}catch(e){$('docmsg').textContent='❌ Upload fehlgeschlagen.'}}
+async function loadDocuments(){if(!user)return;try{const rows=await req('/rest/v1/user_documents?select=id,file_name,storage_path,mime_type,file_size,status,note,created_at&user_id=eq.'+encodeURIComponent(user.id)+'&order=created_at.desc');const labels={neu:'Neu',in_pruefung:'In Prüfung',erledigt:'Erledigt'};$('sumDocuments').textContent=rows.length;$('docs').innerHTML=rows.length?rows.map(x=>`<div class="item"><b>📄 ${esc(x.file_name)}</b><br><small>${formatBytes(x.file_size)} · <span class="statusbadge doc-status-${esc(x.status)}">${esc(labels[x.status]||x.status)}</span> · ${new Date(x.created_at).toLocaleDateString('de-DE')}</small>${x.note?'<p>'+esc(x.note)+'</p>':''}<div class="doc-actions"><button class="light" onclick="openDocument('${escAttr(x.storage_path)}')">Öffnen</button><button class="danger" onclick="deleteDocument('${escAttr(x.id)}','${escAttr(x.storage_path)}')">Löschen</button></div></div>`).join(''):'<p>Noch keine Dokumente vorhanden.</p>'}catch(e){$('docs').innerHTML='<p><small>Dokumente konnten gerade nicht geladen werden.</small></p>'}}
+async function openDocument(path){try{const r=await fetch(U+'/storage/v1/object/sign/user-documents/'+encodeURI(path),{method:'POST',headers:{apikey:K,Authorization:'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify({expiresIn:60})});if(!r.ok)throw Error();const d=await r.json();const url=d.signedURL?.startsWith('http')?d.signedURL:U+'/storage/v1'+d.signedURL;window.open(url,'_blank','noopener')}catch(e){$('docmsg').textContent='❌ Dokument konnte nicht geöffnet werden.'}}
+async function deleteDocument(id,path){if(!confirm('Dokument wirklich löschen?'))return;try{const r=await fetch(U+'/storage/v1/object/user-documents/'+encodeURI(path),{method:'DELETE',headers:{apikey:K,Authorization:'Bearer '+token}});if(!r.ok)throw Error();await req('/rest/v1/user_documents?id=eq.'+encodeURIComponent(id),{method:'DELETE',headers:{Prefer:'return=minimal'}});$('docmsg').textContent='✅ Dokument gelöscht.';await loadDocuments()}catch(e){$('docmsg').textContent='❌ Löschen fehlgeschlagen.'}}
+
+async function loadChat(){if(!user)return;try{const rows=await req('/rest/v1/chat_messages?select=id,sender,message,created_at&user_id=eq.'+encodeURIComponent(user.id)+'&order=created_at.asc');$('sumMessages').textContent=rows.length;$('chatbox').innerHTML=rows.length?rows.map(x=>`<div class="chatmsg ${x.sender==='admin'?'chat-admin':'chat-user'}"><b>${x.sender==='admin'?'Kompetenzzentrum':'Sie'}</b><br>${esc(x.message)}<small class="chatmeta">${new Date(x.created_at).toLocaleString('de-DE')}</small></div>`).join(''):'<p><small>Noch keine Nachrichten.</small></p>';await req('/rest/v1/chat_messages?user_id=eq.'+encodeURIComponent(user.id)+'&sender=eq.admin&read_by_user=eq.false',{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({read_by_user:true})})}catch(e){$('chatbox').innerHTML='<p><small>Nachrichten konnten gerade nicht geladen werden.</small></p>'}}
+async function sendChat(){if(!user||!token){$('chatmsg').textContent='Bitte zuerst anmelden.';return}const m=$('chattext').value.trim();if(!m){$('chatmsg').textContent='Bitte eine Nachricht eingeben.';return}try{await req('/rest/v1/chat_messages',{method:'POST',headers:{Prefer:'return=minimal'},body:JSON.stringify({user_id:user.id,sender:'user',message:m})});$('chattext').value='';$('chatmsg').textContent='✅ Nachricht gesendet.';await loadChat()}catch(e){$('chatmsg').textContent='❌ Nachricht konnte nicht gesendet werden.'}}
+
+$('af').onsubmit=async e=>{e.preventDefault();let b={name:$('an').value.trim(),phone:$('ap').value.trim(),requested_date:$('ad').value,service:$('as').value,note:$('ao').value.trim()||null,status:'neu'};if(user)b.user_id=user.id;try{await req('/rest/v1/appointments',{method:'POST',headers:{Prefer:'return=minimal'},body:JSON.stringify(b)});$('amsg').textContent='✅ Termin gespeichert.';e.target.reset();if(user)await loadMine()}catch(x){if(user){delete b.user_id;try{await req('/rest/v1/appointments',{method:'POST',headers:{Prefer:'return=minimal'},body:JSON.stringify(b)});$('amsg').textContent='✅ Termin gespeichert.';e.target.reset();return}catch(y){}}$('amsg').textContent='❌ Senden fehlgeschlagen.'}};
+$('cf').onsubmit=async e=>{e.preventDefault();try{await req('/rest/v1/contact_requests',{method:'POST',headers:{Prefer:'return=minimal'},body:JSON.stringify({name:$('cn').value.trim(),email:$('ce').value.trim(),message:$('ct').value.trim(),status:'neu'})});$('cmsg').textContent='✅ Nachricht gespeichert.';e.target.reset()}catch(x){$('cmsg').textContent='❌ Senden fehlgeschlagen.'}};
+restoreSession();
+</script>
+</body></html>
